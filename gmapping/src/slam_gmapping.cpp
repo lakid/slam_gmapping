@@ -695,15 +695,16 @@ SlamGMapping::updateMap(const sensor_msgs::LaserScan& scan)
       n;
       n = n->parent)
   {
-    ROS_DEBUG("  %.3f %.3f %.3f",
-              n->pose.x,
-              n->pose.y,
-              n->pose.theta);
     if(!n->reading)
     {
       ROS_DEBUG("Reading is NULL");
       continue;
     }
+    ROS_INFO("%f:  %.3f %.3f %.3f",
+              n->reading->getTime(),
+              n->pose.x,
+              n->pose.y,
+              n->pose.theta);
     matcher.invalidateActiveArea();
     matcher.computeActiveArea(smap, n->pose, &((*n->reading)[0]));
     matcher.registerScan(smap, n->pose, &((*n->reading)[0]));
